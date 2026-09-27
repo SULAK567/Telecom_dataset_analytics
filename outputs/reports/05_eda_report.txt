@@ -1,0 +1,64 @@
+==============================================================================
+PHASE 5 — EXPLORATORY DATA ANALYSIS
+==============================================================================
+
+States: 36   Districts: 632
+
+Generating figures:
+  saved figure: fig01_tower_density_state_map.png
+  saved figure: fig02_tower_density_district_map.png
+  saved figure: fig03_generation_mix_national.png
+
+National generation mix:
+  2G:  1,349,347  (54.20%)
+  3G:    702,543  (28.22%)
+  4G:    437,592  (17.58%)
+  5G:        136  ( 0.01%)
+  saved figure: fig04_generation_mix_by_state.png
+  saved figure: fig05_carrier_comparison.png
+
+Carrier totals:
+  Vi                903,200
+  Airtel            886,523
+  Jio/Reliance      320,023
+  BSNL              232,004
+
+Generation mix within each carrier (%):
+generation       2G     3G     4G     5G
+Vi            61.26  31.50   7.24   0.00
+Airtel        51.13  32.86  16.01   0.00
+Jio/Reliance  21.47   6.99  71.51   0.04
+BSNL          67.20  32.34   0.46   0.00
+  saved figure: fig06_density_extremes_district.png
+
+Densest 5 districts:
+                 region  tower_density  tower_count
+  Central, NCT of Delhi     358.648151         5416
+   Kolkata, West Bengal     293.652932        26837
+    Chennai, Tamil Nadu     280.469603        36040
+New Delhi, NCT of Delhi     269.989960        10395
+     East, NCT of Delhi     235.559195        15374
+
+Sparsest 5 districts (>=50 towers):
+                                region  tower_density  tower_count
+   Data Not Available, Jammu & Kashmir       0.001083           93
+       Lahul & Spiti, Himachal Pradesh       0.004626           64
+         Leh (ladakh), Jammu & Kashmir       0.006054          486
+           West Khasi Hills, Meghalaya       0.012052           63
+Dakshin Bastar Dantewada, Chhattisgarh       0.012960          115
+  saved figure: fig07_feature_correlation_district.png
+
+District feature correlation matrix:
+                      log_tower_density  pct_2g  pct_4g  active_carrier_count  carrier_hhi  range_mean  log_sample_mean
+log_tower_density                 1.000  -0.478   0.345                 0.544       -0.561      -0.026            0.379
+pct_2g                           -0.478   1.000  -0.712                -0.065        0.134      -0.057           -0.305
+pct_4g                            0.345  -0.712   1.000                 0.094       -0.151       0.114            0.329
+active_carrier_count              0.544  -0.065   0.094                 1.000       -0.702       0.011            0.111
+carrier_hhi                      -0.561   0.134  -0.151                -0.702        1.000       0.057           -0.167
+range_mean                       -0.026  -0.057   0.114                 0.011        0.057       1.000            0.207
+log_sample_mean                   0.379  -0.305   0.329                 0.111       -0.167       0.207            1.000
+
+Feature pairs with |r| > 0.8: 0
+  saved figure: fig08_density_vs_modernity_district.png
+
+Correlation log10(density) vs 4G+5G share: r = 0.345

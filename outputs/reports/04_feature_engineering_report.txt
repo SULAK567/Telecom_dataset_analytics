@@ -1,0 +1,108 @@
+==============================================================================
+PHASE 4 — FEATURE ENGINEERING
+==============================================================================
+
+NOTE: 'range_median' is excluded from all modelling — it is exactly
+1000 for every region (OpenCelliD's default fill), i.e. zero variance.
+
+==============================================================================
+FEATURE ENGINEERING — STATE LEVEL (36 regions)
+==============================================================================
+
+Derived features added:
+  gen_score
+  pct_modern
+  log_sample_mean
+  samples_per_sqkm
+  towers_per_carrier
+  settlement_proxy
+
+------------------------------------------------------------------------------
+RULE-BASED COVERAGE TIER
+------------------------------------------------------------------------------
+Transparent composite of three percentile ranks, equally weighted:
+  r1 = percentile rank of log_tower_density   (how much coverage)
+  r2 = percentile rank of pct_modern (4G+5G)  (how modern)
+  r3 = percentile rank of active_carrier_count(how competitive)
+  score = (r1 + r2 + r3) / 3, then split at the 33rd/67th percentile.
+
+Tier distribution:
+  Underserved     12  (33.33%)
+  Moderate        12  (33.33%)
+  Well-served     12  (33.33%)
+
+Mean feature values by tier:
+               tower_density  pct_2g  pct_4g  gen_score  active_carrier_count  range_mean
+coverage_tier                                                                            
+Underserved            0.137  71.849   7.134      2.353                 3.750   1,179.952
+Moderate               0.957  61.305  13.694      2.524                 4.000   1,188.394
+Well-served           17.619  49.276  19.495      2.702                 4.000   1,141.431
+
+Clustering feature null check:
+  log_tower_density      nulls=0  var=0.786200
+  pct_2g                 nulls=0  var=142.420256
+  pct_4g                 nulls=0  var=37.288784
+  active_carrier_count   nulls=0  var=0.135714
+  carrier_hhi            nulls=0  var=0.004684
+  range_mean             nulls=0  var=22859.316639
+  log_sample_mean        nulls=0  var=0.179445
+
+All clustering features have non-zero variance. OK.
+
+==============================================================================
+FEATURE ENGINEERING — DISTRICT LEVEL (632 regions)
+==============================================================================
+
+Derived features added:
+  gen_score
+  pct_modern
+  log_sample_mean
+  samples_per_sqkm
+  towers_per_carrier
+  settlement_proxy
+
+------------------------------------------------------------------------------
+RULE-BASED COVERAGE TIER
+------------------------------------------------------------------------------
+Transparent composite of three percentile ranks, equally weighted:
+  r1 = percentile rank of log_tower_density   (how much coverage)
+  r2 = percentile rank of pct_modern (4G+5G)  (how modern)
+  r3 = percentile rank of active_carrier_count(how competitive)
+  score = (r1 + r2 + r3) / 3, then split at the 33rd/67th percentile.
+
+Tier distribution:
+  Underserved    211  (33.39%)
+  Moderate       210  (33.23%)
+  Well-served    211  (33.39%)
+
+Mean feature values by tier:
+               tower_density  pct_2g  pct_4g  gen_score  active_carrier_count  range_mean
+coverage_tier                                                                            
+Underserved            0.112  76.776   4.300      2.275                 3.578   1,207.944
+Moderate               0.431  70.460   9.522      2.391                 4.000   1,208.925
+Well-served           15.311  56.088  18.671      2.626                 4.000   1,244.768
+
+Clustering feature null check:
+  log_tower_density      nulls=0  var=0.764977
+  pct_2g                 nulls=0  var=181.956493
+  pct_4g                 nulls=0  var=85.880369
+  active_carrier_count   nulls=0  var=0.263814
+  carrier_hhi            nulls=0  var=0.012658
+  range_mean             nulls=0  var=101261.348476
+  log_sample_mean        nulls=0  var=0.095424
+
+All clustering features have non-zero variance. OK.
+
+==============================================================================
+SAVED: /sessions/rcw-012nqma8la3wunmtkmblchkz/mnt/Mini project/data_processed/state_features.csv    (36 rows x 39 cols)
+SAVED: /sessions/rcw-012nqma8la3wunmtkmblchkz/mnt/Mini project/data_processed/district_features.csv (632 rows x 41 cols)
+==============================================================================
+
+Feature set used for clustering:
+  - log_tower_density
+  - pct_2g
+  - pct_4g
+  - active_carrier_count
+  - carrier_hhi
+  - range_mean
+  - log_sample_mean

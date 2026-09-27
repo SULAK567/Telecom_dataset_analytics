@@ -1,0 +1,193 @@
+==============================================================================
+SECTION 1 — RAW FILE SCHEMA AUDIT
+==============================================================================
+
+404.csv columns (14): ['radio', 'mcc', 'mnc', 'lac', 'cid', 'changeable_0', 'long', 'lat', 'range', 'sample', 'changeable_1', 'created', 'updated', 'avgsignal']
+
+405.csv columns (14): ['radio', 'mcc', 'mnc', 'lac', 'cid', 'changeable_0', 'long', 'lat', 'range', 'sample', 'changeable_1', 'created', 'updated', 'avgsignal']
+
+Canonical OpenCelliD schema:
+  radio, mcc, net, area, cell, unit, lon, lat, range, samples,
+  changeable, created, updated, averageSignal
+
+-> Kaggle 'changeable_0' maps to OpenCelliD 'unit'
+-> Kaggle 'changeable_1' maps to OpenCelliD 'changeable'
+
+Constant-column verification across BOTH raw files:
+  rows inspected                      : 2,494,859
+  changeable_1 (= changeable) == 1    : 2,494,859 / 2,494,859 (100.00%)  -> CONSTANT, zero variance
+  avgsignal    (= averageSignal) == 0 : 2,494,859 / 2,494,859 (100.00%)  -> CONSTANT, unusable
+  changeable_0 (= unit) distinct vals : 513  min=-1 max=511  -> identifier, not a flag
+  changeable_0 (= unit) == 0          : 94.09%
+  changeable_0 (= unit) == -1         : 5.51%
+
+CONCLUSION: dropping avgsignal / changeable_0 / changeable_1 is correct.
+The planned 'verified vs crowd-estimated' feature is NOT constructible:
+100% of records are crowd-sourced (changeable == 1).
+
+==============================================================================
+SECTION 2 — MERGED TOWER TABLE AUDIT (tower_table_clean.csv)
+==============================================================================
+
+Shape: 2,494,859 rows x 14 columns
+Memory: 123.7 MB
+
+Dtypes:
+  radio      category
+  mcc        int16
+  mnc        int16
+  lac        int32
+  cid        int64
+  long       float32
+  lat        float32
+  range      int32
+  sample     int32
+  created    int64
+  updated    int64
+  carrier    category
+  circle     category
+  st_nm      category
+
+Null counts:
+  radio                 0  ( 0.000%)
+  mcc                   0  ( 0.000%)
+  mnc                   0  ( 0.000%)
+  lac                   0  ( 0.000%)
+  cid                   0  ( 0.000%)
+  long                  0  ( 0.000%)
+  lat                   0  ( 0.000%)
+  range                 0  ( 0.000%)
+  sample                0  ( 0.000%)
+  created               0  ( 0.000%)
+  updated               0  ( 0.000%)
+  carrier               0  ( 0.000%)
+  circle            7,623  ( 0.306%)
+  st_nm             5,241  ( 0.210%)
+
+Numeric describe():
+               long           lat         range        sample
+count  2.494859e+06  2.494859e+06  2.494859e+06  2.494859e+06
+mean   7.795864e+01  2.018200e+01  1.182005e+03  6.799319e+00
+std    4.207277e+00  6.439745e+00  5.344756e+03  1.539905e+02
+min    6.816261e+01  7.003098e+00  3.970000e+02  1.000000e+00
+25%    7.557804e+01  1.324842e+01  1.000000e+03  1.000000e+00
+50%    7.732796e+01  1.925697e+01  1.000000e+03  1.000000e+00
+75%    7.939751e+01  2.617630e+01  1.000000e+03  3.000000e+00
+max    9.620796e+01  3.483782e+01  2.004800e+06  6.533300e+04
+
+radio value counts:
+radio
+GSM     1352362
+UMTS     703874
+LTE      438472
+NR          136
+CDMA         15
+
+carrier value counts:
+carrier
+Vi                       905261
+Airtel                   888305
+Jio/Reliance             320581
+BSNL                     232664
+Aircel (defunct)         100407
+Uninor (defunct)          23162
+Dolphin (defunct)         10582
+Unknown                    7623
+Videocon (defunct)         5805
+Loop Mobile (defunct)       469
+
+==============================================================================
+SECTION 3 — COORDINATE VALIDITY FILTER
+==============================================================================
+
+India bounding box: lon [68.0, 97.5], lat [6.0, 37.7]
+  null coordinates            : 0
+  (0, 0) null-island coords   : 0
+  outside bounding box        : 0
+  ---
+  rows before                 : 2,494,859
+  rows dropped                : 0 (0.0000%)
+  rows after                  : 2,494,859
+
+==============================================================================
+SECTION 4 — DEDUPLICATION
+==============================================================================
+
+Fully identical rows                     : 0
+Duplicate cell identities (radio+mcc+mnc+lac+cid): 0
+
+Strategy: keep the most recently 'updated' record per cell identity.
+  rows before : 2,494,859
+  rows removed: 0 (0.0000%)
+  rows after  : 2,494,859
+
+==============================================================================
+SECTION 5 — STATE ASSIGNMENT AUDIT
+==============================================================================
+
+Towers with no state assigned: 5,241 (0.2101%)
+(These fall inside the bounding box but outside every state polygon —
+ typically offshore / just across a land border / coastline precision.)
+
+Bounding box of unmatched towers:
+  lon: 68.163 .. 94.310
+  lat: 7.007 .. 32.325
+
+Distinct states matched: 36
+
+Towers per state:
+st_nm
+Maharashtra                 375840
+Karnataka                   272825
+Tamil Nadu                  262151
+Uttar Pradesh               190161
+Telangana                   153013
+Gujarat                     147173
+Kerala                      141120
+NCT of Delhi                139495
+West Bengal                 135000
+Andhra Pradesh              106120
+Rajasthan                    94497
+Haryana                      91158
+Madhya Pradesh               75289
+Punjab                       68615
+Odisha                       44679
+Bihar                        37720
+Uttarakhand                  25149
+Jharkhand                    22298
+Chhattisgarh                 20150
+Himachal Pradesh             18369
+Assam                        17102
+Goa                          13574
+Jammu & Kashmir              11384
+Chandigarh                   10907
+NaN                           5241
+Puducherry                    4588
+Meghalaya                     2518
+Manipur                       2123
+Sikkim                        1636
+Tripura                       1170
+Nagaland                       859
+Mizoram                        804
+Arunanchal Pradesh             588
+Daman & Diu                    579
+Dadara & Nagar Havelli         540
+Andaman & Nicobar Island       403
+Lakshadweep                     21
+
+Dropping unmatched -> final row count: 2,489,618
+
+==============================================================================
+SECTION 6 — DERIVED COLUMN: network generation
+==============================================================================
+
+Generation distribution:
+  2G        1,349,347  (54.20%)
+  3G          702,543  (28.22%)
+  4G          437,592  (17.58%)
+  5G              136  ( 0.01%)
+
+==============================================================================
+SAVED: /sessions/rcw-012nqma8la3wunmtkmblchkz/mnt/Mini project/data_processed/tower_table_v2.csv
+       2,489,618 rows x 15 columns
+==============================================================================

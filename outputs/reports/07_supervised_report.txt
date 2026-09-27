@@ -1,0 +1,104 @@
+==============================================================================
+PHASE 7 — SUPERVISED EXTENSION (Random Forest + SHAP)
+==============================================================================
+
+Districts available for supervised learning: 598
+(Regions held out by the data-sufficiency gate are excluded — a label
+ built on <50 towers is not a trustworthy training target.)
+
+Class balance:
+  Underserved    177  (29.60%)
+  Moderate       210  (35.12%)
+  Well-served    211  (35.28%)
+
+State level is NOT modelled: 35 regions cannot support a train/test
+split without the estimate being dominated by split noise.
+
+==============================================================================
+MODEL A — full feature set (CIRCULAR, includes rule inputs)
+==============================================================================
+Features (7): ['log_tower_density', 'pct_2g', 'pct_4g', 'active_carrier_count', 'carrier_hhi', 'range_mean', 'log_sample_mean']
+
+Train: 418   Test: 180 (stratified 70/30)
+
+Held-out accuracy      : 0.9278
+Held-out macro F1      : 0.9282
+5-fold CV accuracy     : 0.9298 +/- 0.0293  ([0.8917, 0.95, 0.9417, 0.9664, 0.8992])
+
+Per-class report (held-out test set):
+              precision    recall  f1-score   support
+
+ Underserved       0.98      0.89      0.93        53
+    Moderate       0.87      0.94      0.90        63
+ Well-served       0.95      0.95      0.95        64
+
+    accuracy                           0.93       180
+   macro avg       0.93      0.93      0.93       180
+weighted avg       0.93      0.93      0.93       180
+
+  saved figure: fig21_confusion_modelA.png
+
+>>> Model A's accuracy is NOT evidence of anything: three of its
+>>> features are the exact quantities the label was computed from.
+
+==============================================================================
+MODEL B — leakage-free feature set (THE REAL TEST)
+==============================================================================
+Features (10): ['carrier_hhi', 'range_mean', 'log_sample_mean', 'pct_airtel', 'pct_vi', 'pct_jio_reliance', 'pct_bsnl', 'updated_year_mean', 'created_year_mean', 'area_sqkm']
+
+Train: 418   Test: 180 (stratified 70/30)
+
+Held-out accuracy      : 0.6667
+Held-out macro F1      : 0.6662
+5-fold CV accuracy     : 0.6739 +/- 0.0376  ([0.6417, 0.65, 0.7167, 0.6387, 0.7227])
+
+Per-class report (held-out test set):
+              precision    recall  f1-score   support
+
+ Underserved       0.70      0.66      0.68        53
+    Moderate       0.56      0.56      0.56        63
+ Well-served       0.75      0.78      0.76        64
+
+    accuracy                           0.67       180
+   macro avg       0.67      0.67      0.67       180
+weighted avg       0.67      0.67      0.67       180
+
+  saved figure: fig22_confusion_modelB.png
+
+Majority-class baseline accuracy: 0.3528
+Model B lift over baseline      : +0.3138
+  saved figure: fig23_feature_importance_modelB.png
+
+Permutation importance (held-out, 30 repeats):
+log_sample_mean     0.1215
+pct_jio_reliance    0.0620
+updated_year_mean   0.0539
+range_mean          0.0276
+area_sqkm           0.0244
+pct_bsnl            0.0133
+carrier_hhi         0.0117
+created_year_mean   0.0096
+pct_airtel          0.0057
+pct_vi              0.0017
+
+------------------------------------------------------------------------------
+SHAP EXPLANATIONS (Model B)
+------------------------------------------------------------------------------
+SHAP values computed: 3 class(es), 418 samples x 10 features
+
+Mean |SHAP| per feature (higher = more influence on the prediction):
+                   Moderate  Underserved  Well-served  overall
+log_sample_mean      0.0754       0.0925       0.1477   0.1052
+pct_jio_reliance     0.0709       0.0883       0.0899   0.0831
+updated_year_mean    0.0560       0.0668       0.0719   0.0649
+carrier_hhi          0.0414       0.0852       0.0482   0.0583
+created_year_mean    0.0295       0.0321       0.0300   0.0305
+area_sqkm            0.0186       0.0192       0.0314   0.0231
+pct_bsnl             0.0213       0.0167       0.0258   0.0213
+range_mean           0.0196       0.0144       0.0140   0.0160
+pct_vi               0.0129       0.0161       0.0128   0.0140
+pct_airtel           0.0106       0.0089       0.0095   0.0097
+  saved figure: fig24_shap_importance_modelB.png
+  saved figure: fig25_shap_beeswarm_wellserved.png
+
+SAVED: /sessions/rcw-012nqma8la3wunmtkmblchkz/mnt/Mini project/outputs/models/rf_coverage_tier.joblib

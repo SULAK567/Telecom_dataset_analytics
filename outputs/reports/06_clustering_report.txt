@@ -1,0 +1,160 @@
+==============================================================================
+PHASE 6 — CLUSTERING
+==============================================================================
+
+==============================================================================
+CLUSTERING — STATE LEVEL
+==============================================================================
+
+Regions loaded: 36   Features: 7
+Features: ['log_tower_density', 'pct_2g', 'pct_4g', 'active_carrier_count', 'carrier_hhi', 'range_mean', 'log_sample_mean']
+
+Data-sufficiency gate: >= 50 towers required to be clustered
+  clustered      : 35 regions
+  held out       : 1 regions (2.8%)
+  held-out regions: Lakshadweep (21)
+
+Model-selection scan (state):
+ k  inertia  silhouette  calinski_harabasz  davies_bouldin  smallest_cluster  valid
+ 2 180.9737      0.2366            11.6750          1.4392                15   True
+ 3 128.3917      0.2648            14.5316          0.9752                 1  False
+ 4 100.0284      0.2449            14.9762          0.9590                 1  False
+ 5  82.9745      0.2387            14.6454          1.0936                 1  False
+ 6  69.1714      0.2442            14.7432          0.8540                 1  False
+ 7  59.7073      0.2336            14.4823          0.8684                 1  False
+ 8  49.3551      0.2609            15.2898          0.8075                 1  False
+ 9  42.2493      0.2522            15.5965          0.8232                 1  False
+10  37.9854      0.2483            15.1385          0.7303                 1  False
+
+  Minimum acceptable cluster size: 3 regions (max of 3, 3% of 35)
+  Rejected k values (cluster too small to be a coverage regime): [3, 4, 5, 6, 7, 8, 9, 10]
+  Unconstrained silhouette optimum : k = 3 (0.2648)
+  SELECTED k (size-constrained)    : k = 2 (0.2366)
+  Best Calinski-Harabasz at k = 2
+  Best Davies-Bouldin  at k = 2 (lower is better)
+  saved figure: fig09_model_selection_state.png
+
+Final K-Means model: k=2
+  silhouette      : 0.2366
+  davies-bouldin  : 1.4392
+  calinski-harabasz: 11.7
+
+Cluster sizes and names (0 = weakest coverage):
+  C0 · Mid-density · competitive · mixed   20 regions (57.14%)
+  C1 · Dense · competitive · modern   15 regions (42.86%)
+
+Cluster profiles (raw means):
+         tower_density  pct_2g  pct_4g  pct_modern  gen_score  active_carrier_count  carrier_hhi  range_mean  tower_count
+cluster                                                                                                                  
+0                0.475  65.704  10.133      10.136      2.444                 3.950        0.290   1,134.223   28,373.900
+1               14.335  51.672  18.748      18.753      2.671                 4.000        0.309   1,170.676  128,141.267
+  saved figure: fig11_cluster_profile_state.png
+  saved figure: fig13_cluster_map_state.png
+  saved figure: fig15_cluster_pca_state.png
+  PCA variance explained by PC1+PC2: 64.5%
+
+DBSCAN (state): min_samples=8, eps=3.1653 (knee of k-distance curve at index 32)
+  clusters found: 1   noise/outlier regions: 2 (5.7%)
+  saved figure: fig17_dbscan_kdistance_state.png
+  DBSCAN flagged as outliers/gap zones (2):
+    West Bengal; Andaman & Nicobar Island
+  Agreement K-Means vs DBSCAN (Adjusted Rand Index): -0.0019
+
+------------------------------------------------------------------------------
+VALIDATION: clusters vs the rule-based coverage tier
+------------------------------------------------------------------------------
+
+coverage_tier                      Underserved  Moderate  Well-served
+cluster_name                                                         
+Dense · competitive · modern                 0         3           12
+Mid-density · competitive · mixed           11         9            0
+
+Adjusted Rand Index (clusters vs rule-based tiers): 0.4538
+Interpretation: ARI 0 = random agreement, 1 = identical partitions.
+A clearly positive ARI means the unsupervised clusters independently
+recovered the same coverage structure the transparent rule encodes,
+without ever seeing that rule.
+  saved figure: fig19_cluster_vs_rule_state.png
+
+SAVED: /sessions/rcw-012nqma8la3wunmtkmblchkz/mnt/Mini project/data_processed/state_clustered.csv  (36 regions, 1 marked insufficient-data)
+SAVED: /sessions/rcw-012nqma8la3wunmtkmblchkz/mnt/Mini project/outputs/models/cluster_model_state.joblib
+
+==============================================================================
+CLUSTERING — DISTRICT LEVEL
+==============================================================================
+
+Regions loaded: 632   Features: 7
+Features: ['log_tower_density', 'pct_2g', 'pct_4g', 'active_carrier_count', 'carrier_hhi', 'range_mean', 'log_sample_mean']
+
+Data-sufficiency gate: >= 50 towers required to be clustered
+  clustered      : 598 regions
+  held out       : 34 regions (5.4%)
+  held-out regions: Tamenglong, Manipur (1); Nicobar, Andaman & Nicobar Island (1); Upper Siang, Arunanchal Pradesh (1); Peren, Nagaland (2); Tirap, Arunanchal Pradesh (2); Lawangtlai, Mizoram (3); Upper Subansiri, Arunanchal Pradesh (3); Chandel, Manipur (5); Wokha, Nagaland (5); Bijapur, Chhattisgarh (7); Ukhrul, Manipur (7); Zunheboto, Nagaland (7); South Garo Hills, Meghalaya (8); Kargil, Jammu & Kashmir (8); Champhai, Mizoram (11)...
+
+Model-selection scan (district):
+ k    inertia  silhouette  calinski_harabasz  davies_bouldin  smallest_cluster  valid
+ 2 3,102.7193      0.2619           208.0869          1.4041               261   True
+ 3 2,518.6887      0.2940           196.9378          1.1381                23   True
+ 4 2,207.0887      0.2124           177.5300          1.3391                23   True
+ 5 1,906.7883      0.2346           177.2054          1.1588                23   True
+ 6 1,735.8571      0.1953           167.1203          1.2769                14  False
+ 7 1,598.1163      0.2171           159.5044          1.1934                19   True
+ 8 1,468.1522      0.2230           156.0300          1.2001                19   True
+ 9 1,362.7475      0.2294           152.5315          1.1293                 3  False
+10 1,288.5837      0.2128           146.9038          1.1442                 3  False
+
+  Minimum acceptable cluster size: 18 regions (max of 3, 3% of 598)
+  Rejected k values (cluster too small to be a coverage regime): [6, 9, 10]
+  Unconstrained silhouette optimum : k = 3 (0.2940)
+  SELECTED k (size-constrained)    : k = 3 (0.2940)
+  Best Calinski-Harabasz at k = 2
+  Best Davies-Bouldin  at k = 3 (lower is better)
+  saved figure: fig10_model_selection_district.png
+
+Final K-Means model: k=3
+  silhouette      : 0.2942
+  davies-bouldin  : 1.1376
+  calinski-harabasz: 196.9
+
+Cluster sizes and names (0 = weakest coverage):
+  C0 · Sparse · partly-served · legacy   23 regions ( 3.85%)
+  C1 · Mid-density · competitive · legacy  337 regions (56.35%)
+  C2 · Mid-density · competitive · modern  238 regions (39.80%)
+
+Cluster profiles (raw means):
+         tower_density  pct_2g  pct_4g  pct_modern  gen_score  active_carrier_count  carrier_hhi  range_mean  tower_count
+cluster                                                                                                                  
+0                0.179  76.910   5.804       5.804      2.289                 2.957        0.424   1,147.752      185.174
+1                0.296  74.764   6.592       6.592      2.318                 4.000        0.347   1,200.250    1,186.884
+2               13.611  56.863  18.055      18.059      2.612                 4.000        0.308   1,261.963    8,759.962
+  saved figure: fig12_cluster_profile_district.png
+  saved figure: fig14_cluster_map_district.png
+  saved figure: fig16_cluster_pca_district.png
+  PCA variance explained by PC1+PC2: 56.8%
+
+DBSCAN (district): min_samples=8, eps=1.5592 (knee of k-distance curve at index 521)
+  clusters found: 1   noise/outlier regions: 45 (7.5%)
+  saved figure: fig18_dbscan_kdistance_district.png
+  DBSCAN flagged as outliers/gap zones (45):
+    Kolkata, West Bengal; Navsari, Gujarat; Hoshiarpur, Punjab; Shimoga, Karnataka; Balangir, Odisha; Dhar, Madhya Pradesh; Purnia, Bihar; Bhandara, Maharashtra; Kathua, Jammu & Kashmir; Bahraich, Uttar Pradesh; Karauli, Rajasthan; Supaul, Bihar; Tapi, Gujarat; Leh (ladakh), Jammu & Kashmir; Banswara, Rajasthan; South Andaman, Andaman & Nicobar Island; Karaikal, Puducherry; Malkangiri, Odisha; Rudraprayag, Uttarakhand; Panna, Madhya Pradesh; Darrang, Assam; Chamoli, Uttarakhand; Garhwa, Jharkhand; Bishnupur, Manipur; Bageshwar, Uttarakhand...
+  Agreement K-Means vs DBSCAN (Adjusted Rand Index): 0.1252
+
+------------------------------------------------------------------------------
+VALIDATION: clusters vs the rule-based coverage tier
+------------------------------------------------------------------------------
+
+coverage_tier                       Underserved  Moderate  Well-served
+cluster_name                                                          
+Mid-density · competitive · legacy          153       174           10
+Mid-density · competitive · modern            1        36          201
+Sparse · partly-served · legacy              23         0            0
+
+Adjusted Rand Index (clusters vs rule-based tiers): 0.4385
+Interpretation: ARI 0 = random agreement, 1 = identical partitions.
+A clearly positive ARI means the unsupervised clusters independently
+recovered the same coverage structure the transparent rule encodes,
+without ever seeing that rule.
+  saved figure: fig20_cluster_vs_rule_district.png
+
+SAVED: /sessions/rcw-012nqma8la3wunmtkmblchkz/mnt/Mini project/data_processed/district_clustered.csv  (632 regions, 34 marked insufficient-data)
+SAVED: /sessions/rcw-012nqma8la3wunmtkmblchkz/mnt/Mini project/outputs/models/cluster_model_district.joblib

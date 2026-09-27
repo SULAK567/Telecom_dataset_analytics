@@ -1,0 +1,15 @@
+# Telecom Network Coverage Analytics — dependencies
+# Install with:  pip install -r requirements.txt
+
+pandas>=2.0
+numpy>=1.24
+geopandas>=1.0
+shapely>=2.0
+pyarrow>=14.0          # parquet for the tower-level district lookup
+scikit-learn>=1.3      # KMeans, DBSCAN, RandomForest, metrics
+matplotlib>=3.7
+seaborn>=0.13
+joblib>=1.3
+shap>=0.44             # model explanations (Phase 7)
+streamlit>=1.50        # dashboard (uses width="stretch")
+plotly>=5.18           # interactive dashboard charts

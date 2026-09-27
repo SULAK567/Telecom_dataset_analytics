@@ -1,0 +1,27 @@
+[
+  {
+    "level": "state",
+    "k": 2,
+    "silhouette": 0.23664382834508088,
+    "ari_vs_rule": 0.45375722543352603,
+    "dbscan_clusters": 1,
+    "dbscan_noise": 2,
+    "names": {
+      "0": "Mid-density \u00b7 competitive \u00b7 mixed",
+      "1": "Dense \u00b7 competitive \u00b7 modern"
+    }
+  },
+  {
+    "level": "district",
+    "k": 3,
+    "silhouette": 0.2942078311059082,
+    "ari_vs_rule": 0.4385347758917917,
+    "dbscan_clusters": 1,
+    "dbscan_noise": 45,
+    "names": {
+      "0": "Sparse \u00b7 partly-served \u00b7 legacy",
+      "1": "Mid-density \u00b7 competitive \u00b7 legacy",
+      "2": "Mid-density \u00b7 competitive \u00b7 modern"
+    }
+  }
+]
