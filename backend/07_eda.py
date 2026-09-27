@@ -1,14 +1,15 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
-# --- end shim ---
-
 """
 Phase 5 — Exploratory Data Analysis.
 
 Produces the figure set in outputs/figures/ plus a written EDA report.
 Every figure follows the shared visual system in viz_style.py.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
+# --- end shim ---
+
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np

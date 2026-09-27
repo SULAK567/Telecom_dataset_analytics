@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[2] / "common"))
-# --- end shim ---
-
 """
 Shared region-aggregation logic.
 
@@ -10,6 +5,12 @@ The state-level and district-level pipelines are the SAME code: only the
 boundary file and the grouping key change. This module holds that shared
 logic so the two granularities cannot silently drift apart.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2] / "common"))
+# --- end shim ---
+
 import geopandas as gpd
 import numpy as np
 import pandas as pd

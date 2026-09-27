@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
-# --- end shim ---
-
 """
 Run the entire pipeline end to end.
 
@@ -11,6 +6,12 @@ Run the entire pipeline end to end.
 
 Each step is a standalone script, so any step can also be run on its own.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
+# --- end shim ---
+
 import argparse
 import subprocess
 import sys

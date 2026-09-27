@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[2] / "common"))
-# --- end shim ---
-
 """
 Phase 3a — Source the district boundary file.
 
@@ -25,6 +20,12 @@ Andhra Pradesh here, while states_india.geojson (used at state level) has
 Telangana separate. The two granularities are therefore independent views,
 not a strict hierarchy. This is stated as a limitation rather than patched.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2] / "common"))
+# --- end shim ---
+
 import json
 import urllib.request
 

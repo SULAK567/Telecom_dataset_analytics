@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[2] / "common"))
-# --- end shim ---
-
 """
 Phase 2 — Regional enrichment at STATE level.
 
@@ -10,6 +5,12 @@ Input : data_processed/tower_table_v2.csv, states_india.geojson
 Output: data_processed/state_aggregated.csv
         outputs/reports/02_state_aggregation_report.txt
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2] / "common"))
+# --- end shim ---
+
 import geopandas as gpd
 import pandas as pd
 

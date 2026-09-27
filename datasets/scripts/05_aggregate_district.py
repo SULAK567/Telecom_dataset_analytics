@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[2] / "common"))
-# --- end shim ---
-
 """
 Phase 3b — Regional enrichment at DISTRICT level.
 
@@ -16,6 +11,12 @@ Output: data_processed/tower_district_lookup.parquet   (tower -> district)
         data_processed/district_aggregated.csv
         outputs/reports/03_district_aggregation_report.txt
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2] / "common"))
+# --- end shim ---
+
 import geopandas as gpd
 import pandas as pd
 

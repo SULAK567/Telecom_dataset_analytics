@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
-# --- end shim ---
-
 """
 India Telecom Network Coverage Analytics — Streamlit dashboard.
 
@@ -18,6 +13,12 @@ Design notes
 * First-time visitors land on "Start here", which carries a guided tour and a
   plain-language glossary.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
+# --- end shim ---
+
 import json
 
 import joblib

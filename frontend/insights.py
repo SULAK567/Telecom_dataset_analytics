@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
-# --- end shim ---
-
 """
 Automated insight generation.
 
@@ -15,6 +10,12 @@ The point of this module: a chart shows *what* the data is, an insight states
 *what it means*. Without this layer the dashboard makes the reader do all the
 interpretive work.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
+# --- end shim ---
+
 import numpy as np
 import pandas as pd
 

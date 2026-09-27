@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
-# --- end shim ---
-
 """
 UI helpers for the dashboard: version-safe Streamlit wrappers, theming,
 and small presentation components.
@@ -22,6 +17,12 @@ once per chart, flooding the page. These wrappers inspect the installed
 signature once and pass whichever spelling that version actually supports,
 so the app is silent and correct on any Streamlit release.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
+# --- end shim ---
+
 import inspect
 from functools import lru_cache
 

@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
-# --- end shim ---
-
 """
 Phase 4 — Feature engineering + rule-based coverage tier.
 
@@ -16,6 +11,12 @@ The rule-based tier is deliberately built WITHOUT any model. It exists to
 sanity-check the clustering later: if unsupervised clusters broadly agree
 with a transparent rule, the clusters are measuring something real.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
+# --- end shim ---
+
 import numpy as np
 import pandas as pd
 

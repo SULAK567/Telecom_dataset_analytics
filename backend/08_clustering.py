@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
-# --- end shim ---
-
 """
 Phase 6 — Clustering (K-Means + DBSCAN), for BOTH granularities.
 
@@ -15,6 +10,12 @@ Outputs: data_processed/state_clustered.csv, district_clustered.csv
          outputs/figures/fig09..fig15
          outputs/reports/06_clustering_report.txt
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
+# --- end shim ---
+
 import importlib
 import json
 

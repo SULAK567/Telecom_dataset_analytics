@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
-# --- end shim ---
-
 """
 Phase 8a — Prepare lightweight assets for the dashboard.
 
@@ -12,6 +7,12 @@ simplified (topology-aware where possible) for display only. All ANALYSIS
 already used the full-resolution polygons — simplification affects rendering,
 never the numbers.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
+# --- end shim ---
+
 import json
 
 import geopandas as gpd

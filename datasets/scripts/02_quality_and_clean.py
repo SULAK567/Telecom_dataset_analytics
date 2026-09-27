@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[2] / "common"))
-# --- end shim ---
-
 """
 Phase 1 (completion) — Data quality audit + cleaning.
 
@@ -41,6 +36,12 @@ from the telecom firm (changeable == 0)" CANNOT be built from this dataset —
 every record is a crowd-sourced estimate. This is reported as a finding, not
 silently dropped.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2] / "common"))
+# --- end shim ---
+
 import sys
 import pandas as pd
 import numpy as np

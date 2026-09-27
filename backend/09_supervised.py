@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
-# --- end shim ---
-
 """
 Phase 7 — Supervised extension: Random Forest + SHAP.
 
@@ -28,6 +23,12 @@ So two models are trained:
 
 SHAP is run on Model B, because explaining Model A would only explain the rule.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
+# --- end shim ---
+
 import json
 
 import joblib

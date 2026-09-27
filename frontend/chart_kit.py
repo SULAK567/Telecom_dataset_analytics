@@ -1,8 +1,3 @@
-# --- shared-modules path shim (auto-added) ---
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
-# --- end shim ---
-
 """
 Reusable Plotly chart builders with the contrast and layout defects fixed.
 
@@ -19,6 +14,12 @@ Three defects this module exists to prevent:
 3. CLIPPED VALUE LABELS — `textposition="outside"` writes past the plot area
    and Plotly crops it. Every outside-labelled axis gets explicit headroom.
 """
+
+# --- shared-modules path shim (auto-added) ---
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1] / "common"))
+# --- end shim ---
+
 import numpy as np
 import plotly.graph_objects as go
 
